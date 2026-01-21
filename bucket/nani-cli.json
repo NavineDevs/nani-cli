@@ -1,0 +1,30 @@
+{
+  "version": "1.1",
+  "description": "ani-cli but better",
+  "homepage": "https://github.com/NavineDevs/nani-cli",
+  "license": "MIT",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/NavineDevs/nani-cli/releases/download/v1.1/nani-cli.zip"
+    }
+  },
+  "bin": "nani-cli",
+  "depends": [
+    "git",
+    "ffmpeg",
+    "mpv",
+    "yt-dlp",
+    "aria2",
+    "fzf"
+  ],
+  "checkver": {
+    "github": "https://github.com/NavineDevs/nani-cli"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/NavineDevs/nani-cli/releases/download/v$version/nani-cli.zip"
+      }
+    }
+  }
+}
