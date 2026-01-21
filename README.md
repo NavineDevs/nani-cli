@@ -74,11 +74,21 @@ man nani-cli
 ---
 
 ### 🪟 Windows (Scoop)
-you need gitbash command line for powershell %USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
+
+### you need gitbash install using powershell or gitbash website https://git-scm.com/install/windows
+
 #### Install Scoop (PowerShell)
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 iwr -useb get.scoop.sh | iex
+```
+### Install git using scoop (powershell)
+``` 
+scoop install git
+```
+### command line for powershell profile
+```
+%USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
 ```
 
 #### Add bucket & install
