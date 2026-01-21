@@ -38,20 +38,19 @@ die() {
     exit 1
 }
 rand_line() {
-    # Reads lines from stdin and prints one random line (portable; no shuf required)
-    awk 'BEGIN{srand()} 
+    # Reads lines from stdin and prints one random line (portable)
+    awk 'BEGIN{srand()} {a[NR]=$0} END{if (NR > 0) print a[int(rand()*NR)+1]}'
+}
 
 random_seed() {
-    # Pick a broad search seed to approximate "global" random without a query
+    # Broad seeds to approximate a "global random anime"
     printf "%s\n" \
         a e i o u \
         an re no ka shi ta \
-        love school magic hero demon \
         x y z \
+        love school magic hero demon \
         1 2 3 4 5 \
     | rand_line
-}
-{a[NR]=$0} END{if(NR>0) print a[int(rand()*NR)+1] }'
 }
 
 show_stats() {
@@ -515,6 +514,10 @@ while [ $# -gt 0 ]; do
     esac
     shift
 done
+
+# Force pure random mode (ignore any query)
+[ "$search" = "random" ] && unset query
+
 [ "$use_external_menu" = "0" ] && multi_selection_flag="${ANI_CLI_MULTI_SELECTION:-"-m"}"
 [ "$use_external_menu" = "1" ] && multi_selection_flag="${ANI_CLI_MULTI_SELECTION:-"-multi-select"}"
 [ "$external_menu_normal_window" = "1" ] && external_menu_args="-normal-window"
@@ -546,21 +549,20 @@ case "$search" in
         allanime_title="$(printf "%s" "$title" | cut -d'(' -f1 | tr -d '[:punct:]')"
         ;;
 
-
-random)
-    # Completely random anime (no query). Works with --dub because mode is already set.
-    seed="$(random_seed)"
-    anime_list="$(search_anime "$seed")"
-    [ -z "$anime_list" ] && die "Random search failed"
-    result="$(printf "%s" "$anime_list" | rand_line)"
-    [ -z "$result" ] && die "Random pick failed"
-    title=$(printf "%s" "$result" | cut -f2)
-    allanime_title="$(printf "%s" "$title" | cut -d'(' -f1 | tr -d '[:punct:]')"
-    id=$(printf "%s" "$result" | cut -f1)
-    ep_list=$(episodes_list "$id")
-    [ -z "$ep_no" ] && ep_no=$(printf "%s" "$ep_list" | head -n1)
-    [ -z "$ep_no" ] && exit 1
-    ;;
+    random)
+        # Completely random anime (no query). Works with --dub because mode is already set.
+        seed="$(random_seed)"
+        anime_list="$(search_anime "$seed")"
+        [ -z "$anime_list" ] && die "Random search failed"
+        result="$(printf "%s" "$anime_list" | rand_line)"
+        [ -z "$result" ] && die "Random pick failed"
+        title=$(printf "%s" "$result" | cut -f2)
+        allanime_title="$(printf "%s" "$title" | cut -d'(' -f1 | tr -d '[:punct:]')"
+        id=$(printf "%s" "$result" | cut -f1)
+        ep_list=$(episodes_list "$id")
+        [ -z "$ep_no" ] && ep_no=$(printf "%s" "$ep_list" | head -n1)
+        [ -z "$ep_no" ] && exit 1
+        ;;
 
     *)
         if [ "$use_external_menu" = "0" ]; then
