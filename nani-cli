@@ -56,7 +56,6 @@ show_stats() {
     [ -n "$last_title" ] && printf "Last: %s (episode %s)\n" "$last_title" "$last_ep"
     exit 0
 }
-}
 
 help_info() {
     printf "
