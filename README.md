@@ -97,6 +97,7 @@ scoop install git
 ```
 scoop bucket add extras
 scoop install extras/windows-terminal
+scoop install extras/vlc
 ```
 ### Install Dependencies
 ```
