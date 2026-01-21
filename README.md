@@ -82,13 +82,25 @@ man nani-cli
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 iwr -useb get.scoop.sh | iex
 ```
+
 ### Install git using scoop (powershell)
 ``` 
 scoop install git
 ```
+
 ### command line for powershell profile
 ```
 %USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
+```
+
+### Install extras
+```
+scoop bucket add extras
+scoop install extras/windows-terminal
+```
+### Install Dependencies
+```
+scoop install fzf ffmpeg mpv
 ```
 
 #### Add bucket & install
