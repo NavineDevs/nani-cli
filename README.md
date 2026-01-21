@@ -140,7 +140,6 @@ nani-cli --source aniwatch
 - Config: `~/.config/nani-cli/config`
 - History: `~/.config/nani-cli/history.json`
 - Cache: `~/.cache/nani-cli/`
-- Downloaded Path `C:\Users\user\anime.mp4`
 
 ---
 
@@ -149,6 +148,17 @@ nani-cli --source aniwatch
 ```bash
 nani-cli --help
 ```
+- Downloaded Path `C:\Users\user\anime.mp4`
+```To check download path (windows)
+pwd
+```
+
+```Set new path(windows)
+setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\anime
+or setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\
+```
+you can change the Downloads to like Videos and anime to like movies restart the terminal after
+
 ---
 
 ## Extra stuff
