@@ -74,7 +74,7 @@ man nani-cli
 ---
 
 ### 🪟 Windows (Scoop)
-
+you need gitbash command line for powershell %USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
 #### Install Scoop (PowerShell)
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
