@@ -147,9 +147,25 @@ nani-cli --source aniwatch
 
 ```bash
 nani-cli --help
-man nani-cli
 ```
+---
 
+## Extra stuff
+```Windows install syncplay for nani-cli -s
+scoop install syncplay
+scoop install extras/vcredist202
+```
+```to unistall extras/vcredist202 
+do scoop unistall extras/vcredist202
+```
+```Linx syncplay
+sudo apt update
+sudo apt install syncplay
+```
+```Macos syncplay
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install --cask syncplay
+```
 ---
 
 ## ⚠️ Disclaimer
