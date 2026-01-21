@@ -1,0 +1,140 @@
+# 🎬 NaniCLI
+
+A fast and simple CLI tool to browse, watch, and download anime from the terminal.  
+**Fully compatible with ani-cli**, with extra quality-of-life features.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/os-linux-brightgreen">
+  <img src="https://img.shields.io/badge/os-macos-brightgreen">
+  <img src="https://img.shields.io/badge/os-windows-yellowgreen">
+</p>
+
+---
+
+## ✨ Features
+
+- Watch anime from the terminal
+- Download episodes (`-d`)
+- Resume watching (`--continue`)
+- Watch history (`--history`)
+- Fuzzy search
+- Filter by **season / year / genre**
+- Source management (`--sources`, `--source`)
+- Random anime (`--random`)
+- Uses `mpv`, `iina`, or `vlc`
+
+---
+
+## 📦 Installation
+
+### 🐧 Linux (Debian / Ubuntu)
+
+```bash
+sudo apt update
+sudo apt install -y curl grep aria2 ffmpeg git fzf yt-dlp mpv
+
+git clone https://github.com/NavineDevs/nani-cli.git
+cd nani-cli
+chmod +x nani-cli
+sudo cp nani-cli /usr/local/bin/
+sudo cp nani-cli.1 /usr/local/share/man/man1/
+sudo mandb
+```
+
+Test:
+```bash
+nani-cli
+```
+
+---
+
+### 🍎 macOS
+
+#### Install dependencies
+```bash
+brew install curl grep aria2 ffmpeg git fzf yt-dlp
+brew install --cask iina
+```
+
+#### Install NaniCLI
+```bash
+git clone https://github.com/NavineDevs/nani-cli.git
+cd nani-cli
+chmod +x nani-cli
+cp nani-cli "$(brew --prefix)"/bin/
+cp nani-cli.1 "$(brew --prefix)"/share/man/man1/
+```
+
+Test:
+```bash
+nani-cli
+man nani-cli
+```
+
+---
+
+### 🪟 Windows (Scoop)
+
+#### Install Scoop (PowerShell)
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+iwr -useb get.scoop.sh | iex
+```
+
+#### Add bucket & install
+```powershell
+scoop bucket add nani https://github.com/NavineDevs/nani-cli
+scoop install nani-cli
+```
+
+Test:
+```powershell
+nani-cli
+```
+
+> 💡 For best results on Windows, use **Windows Terminal + Git Bash**.
+
+---
+
+## ▶️ Usage
+
+```bash
+nani-cli
+nani-cli "Naruto"
+nani-cli -d "One Piece"
+nani-cli --continue
+nani-cli --history
+nani-cli --random
+nani-cli --sources
+nani-cli --source aniwatch
+```
+
+---
+
+## 📁 Files
+
+- Config: `~/.config/nani-cli/config`
+- History: `~/.config/nani-cli/history.json`
+- Cache: `~/.cache/nani-cli/`
+
+---
+
+## 📄 Help
+
+```bash
+nani-cli --help
+man nani-cli
+```
+
+---
+
+## ⚠️ Disclaimer
+
+NaniCLI does not host content.  
+It streams from publicly available sources.
+
+---
+
+## ❤️ Credits
+
+Based on **ani-cli**, maintained and extended by **NavineDevs**.
