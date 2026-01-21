@@ -8,7 +8,10 @@
       "url": "https://github.com/NavineDevs/nani-cli/releases/download/nani-cli/nani-cli.zip"
     }
   },
-  "bin": "nani-cli",
+  "bin": [
+    "nani-cli",
+    ["nani-cli", "nani"]
+  ],
   "depends": [
     "git",
     "ffmpeg",
