@@ -140,6 +140,7 @@ nani-cli --source aniwatch
 - Config: `~/.config/nani-cli/config`
 - History: `~/.config/nani-cli/history.json`
 - Cache: `~/.cache/nani-cli/`
+- Downloaded Path `C:\Users\user\anime.mp4`
 
 ---
 
