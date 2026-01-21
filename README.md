@@ -18,9 +18,6 @@ A fast and simple CLI tool to browse, watch, and download anime from the termina
 - Download episodes (`-d`)
 - Resume watching (`--continue`)
 - Watch history (`--history`)
-- Fuzzy search
-- Filter by **season / year / genre**
-- Source management (`--sources`, `--source`)
 - Random anime (`--random`)
 - Uses `mpv`, `iina`, or `vlc`
 
