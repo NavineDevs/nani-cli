@@ -121,13 +121,11 @@ nani-cli
 
 ```bash
 nani-cli
-nani-cli "Naruto"
-nani-cli -d "One Piece"
+nani
+nani-cli -d 
 nani-cli --continue
 nani-cli --history
 nani-cli --random
-nani-cli --sources
-nani-cli --source aniwatch
 ```
 
 ---
