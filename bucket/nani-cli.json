@@ -23,7 +23,7 @@
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://github.com/NavineDevs/nani-cli/releases/download/v$version/nani-cli.zip"
+        "url": "https://github.com/NavineDevs/nani-cli/releases/download/nani-cli/nani-cli.zip"
       }
     }
   }
