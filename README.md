@@ -11,8 +11,8 @@ A fast and simple CLI tool to browse, watch, and download anime from the termina
 
 ---
 
-## ✨ Features
-- alias nani -h
+## ✨ Features & alias: nani
+- nani -h
 - nani-cli -h
 - Watch anime from the terminal
 - Download episodes (`-d`)
