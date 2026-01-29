@@ -104,7 +104,7 @@ scoop install fzf ffmpeg mpv
 
 #### Add bucket & install
 ```powershell
-scoop bucket add nani https://github.com/NavineDevs/nani-cli
+scoop bucket add nani-cli https://github.com/NavineDevs/nani-cli
 scoop install nani-cli
 ```
 
