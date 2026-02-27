@@ -99,7 +99,7 @@ scoop install extras/vlc
 ```
 ### Install Dependencies
 ```
-scoop install fzf ffmpeg mpv
+scoop install fzf ffmpeg mpv yt-dlp
 ```
 
 #### Add bucket & install
