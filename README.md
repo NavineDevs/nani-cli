@@ -12,8 +12,9 @@ A fast and simple CLI tool to browse, watch, and download anime from the termina
 ---
 
 ## ✨ Features & alias: nani
-- nani -h
-- nani-cli -h
+
+- `nani -h`
+- `nani-cli -h`
 - Watch anime from the terminal
 - Download episodes (`-d`)
 - Resume watching (`--continue`)
@@ -40,6 +41,7 @@ sudo mandb
 ```
 
 Test:
+
 ```bash
 nani-cli
 ```
@@ -48,14 +50,10 @@ nani-cli
 
 ### 🍎 macOS
 
-#### Install dependencies
 ```bash
 brew install curl grep aria2 ffmpeg git fzf yt-dlp
 brew install --cask iina
-```
 
-#### Install NaniCLI
-```bash
 git clone https://github.com/NavineDevs/nani-cli.git
 cd nani-cli
 chmod +x nani-cli
@@ -63,57 +61,26 @@ cp nani-cli "$(brew --prefix)"/bin/
 cp nani-cli.1 "$(brew --prefix)"/share/man/man1/
 ```
 
-Test:
-```bash
-nani-cli
-man nani-cli
-```
-
 ---
 
-### 🪟 Windows (Scoop)
+### 🪟 Windows (Git Bash)
 
-### you need gitbash install using powershell or gitbash website https://git-scm.com/install/windows
+Install Git for Windows:
+https://git-scm.com/install/windows
 
-#### Install Scoop (PowerShell)
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 iwr -useb get.scoop.sh | iex
-```
-
-### Install git using scoop (powershell)
-``` 
 scoop install git
-```
-
-### command line for powershell profile
-```
-%USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
-```
-
-### Install extras
-```
 scoop bucket add extras
-scoop install extras/windows-terminal
-scoop install extras/vlc
-```
-### Install Dependencies
-```
-scoop install fzf ffmpeg mpv yt-dlp
+scoop install windows-terminal vlc fzf ffmpeg mpv yt-dlp
 ```
 
-#### Add bucket & install
-```powershell
-scoop bucket add nani-cli https://github.com/NavineDevs/nani-cli
-scoop install nani-cli
-```
+Use Git Bash and run:
 
-Test:
-```powershell
+```bash
 nani-cli
 ```
-
-> 💡 For best results on Windows, use **Windows Terminal + Git Bash**.
 
 ---
 
@@ -122,7 +89,7 @@ nani-cli
 ```bash
 nani-cli
 nani
-nani-cli -d 
+nani-cli -d
 nani-cli --continue
 nani-cli --history
 nani-cli --random
@@ -143,40 +110,43 @@ nani-cli --random
 ```bash
 nani-cli --help
 ```
-- Downloaded Path `C:\Users\user\anime.mp4`
-```To check download path (windows)
-pwd
+
+Set download directory (Windows):
+
+```powershell
+setx NANI_CLI_DOWNLOAD_DIR "%USERPROFILE%\\Downloads\\anime"
 ```
 
-```Set new path(windows)
-setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\anime
-or setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\
-```
-you can change the Downloads to like Videos and anime to like movies restart the terminal after
+Restart the terminal after changing the environment variable.
 
 ---
 
-## Extra stuff
-```Windows install syncplay for nani-cli -s
+## Extra
+
+### Windows
+
+```powershell
 scoop install syncplay
-scoop install extras/vcredist202
+scoop install extras/vcredist2022
 ```
-```to unistall extras/vcredist202 
-do scoop unistall extras/vcredist202
-```
-```Linx syncplay
-sudo apt update
+
+### Linux
+
+```bash
 sudo apt install syncplay
 ```
-```Macos syncplay
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+### macOS
+
+```bash
 brew install --cask syncplay
 ```
+
 ---
 
 ## ⚠️ Disclaimer
 
-NaniCLI does not host content.  
+NaniCLI does not host content.
 It streams from publicly available sources.
 
 ---
