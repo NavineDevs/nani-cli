@@ -1,70 +1,96 @@
 # 🎬 NaniCLI
 
-NaniCLI 1.8.8 is a Git Bash/Linux/macOS launcher around the full ani-cli 4.15 engine, with NaniCLI aliases and a bundled Node.js crypto helper. It does not require Botan or Python.
+NaniCLI is an terminal application for browsing, watching, and downloading anime.
 
-## Required dependencies
+This release uses **OpenSSL** for encrypted source handling. It does **not** require Botan, Node.js, or Python.
 
-- Node.js **required** for encrypted source handling
-- `curl`, `grep`, `sed`
+## Included files
+
+- `nani-cli` — launcher, aliases, diagnostics, and combined help
+- `nani-engine` — full ani-cli-compatible engine with OpenSSL provider decryption
+- `nani-cli.1` — manual page
+
+Keep `nani-cli` and `nani-engine` in the same folder.
+
+## Dependencies
+
+Required:
+
+- Bash-compatible shell
+- `openssl`
+- `curl`
+- `grep`
+- `sed`
 - `fzf`, `rofi`, or `dmenu`
-- `mpv`, `iina`, or `vlc`
-- Downloads: `aria2c` plus `yt-dlp` or `ffmpeg`
-- Optional: `syncplay`, `ani-skip`
+- `mpv`, IINA, or VLC
 
-## Windows / Git Bash with Scoop
+For downloads:
 
-Run dependency installation in PowerShell:
+- `aria2c`
+- `yt-dlp` or `ffmpeg`
+
+Optional:
+
+- `syncplay` for `-s`
+- `ani-skip` for `--skip`
+- `patch` for upstream `-U` updates
+
+## Windows — Scoop and Git Bash
+
+Run in PowerShell:
 
 ```powershell
-scoop install git nodejs fzf ffmpeg mpv yt-dlp aria2
+scoop bucket add extras
+scoop install git openssl fzf ffmpeg mpv yt-dlp aria2
 ```
 
-Use Windows Terminal with a Git Bash profile. Then install NaniCLI through your NavineDevs Scoop bucket/release.
-
-After replacing a GitHub release asset:
-
-```powershell
-scoop update
-scoop uninstall nani-cli
-scoop cache rm nani-cli
-scoop install nani-cli
-```
-
-Open a fresh Git Bash tab and test:
+Use the **Git Bash profile inside Windows Terminal**. After installing the Scoop package/release, run:
 
 ```bash
-hash -r
 nani-cli --nani-doctor
 nani-cli -h
 nani-cli "one piece"
 ```
 
-## Linux
+## Linux — Debian/Ubuntu
 
 ```bash
 sudo apt update
-sudo apt install -y nodejs curl grep sed fzf mpv aria2 ffmpeg yt-dlp
-chmod +x nani-cli nani-engine nani-crypto.js
-sudo cp nani-cli nani-engine nani-crypto.js /usr/local/bin/
-sudo mkdir -p /usr/local/share/man/man1
+sudo apt install -y openssl curl grep sed fzf mpv aria2 ffmpeg yt-dlp patch
+chmod +x nani-cli nani-engine
+sudo cp nani-cli nani-engine /usr/local/bin/
 sudo cp nani-cli.1 /usr/local/share/man/man1/
+sudo mandb
 ```
-
-The three executable files must remain in the same directory.
 
 ## macOS
 
 ```bash
-brew install node curl grep aria2 ffmpeg git fzf yt-dlp
-brew install --cask iina
-chmod +x nani-cli nani-engine nani-crypto.js
-cp nani-cli nani-engine nani-crypto.js "$(brew --prefix)/bin/"
+brew install openssl curl grep fzf mpv aria2 ffmpeg yt-dlp
+chmod +x nani-cli nani-engine
+cp nani-cli nani-engine "$(brew --prefix)/bin/"
 cp nani-cli.1 "$(brew --prefix)/share/man/man1/"
+```
+
+IINA can replace mpv:
+
+```bash
+brew install --cask iina
 ```
 
 ## Commands
 
-All original ani-cli commands are supported:
+NaniCLI additions:
+
+```text
+--history
+--random
+--nani-version
+--nani-doctor
+--nani-help
+```
+
+Full ani-cli-compatible commands:
 
 ```text
 -c, --continue
@@ -83,73 +109,51 @@ All original ani-cli commands are supported:
 --rofi
 --dmenu
 --skip
---skip-title TITLE
 --no-detach
 --exit-after-play
+--skip-title TITLE
 -N, --nextep-countdown
 -U, --update
-```
-
-NaniCLI additions:
-
-```text
---history
---random [query]
---nani-version
---nani-doctor
---nani-help
 ```
 
 Examples:
 
 ```bash
-nani-cli
-nani "one piece"
-nani-cli -q 1080p "frieren"
-nani-cli -d -e 1-12 "anime title"
-nani-cli --continue
+nani-cli "one piece"
+nani "frieren" -q 1080p
+nani-cli --dub "dragon ball"
 nani-cli --history
 nani-cli --random
-nani-cli --dub "anime title"
-nani-cli -s "anime title"
+nani-cli -d -e 1-3 "cowboy bebop"
 ```
 
 ## Troubleshooting
 
-### `Program "botan" not found`
-
-You are running an older release. Reinstall this package and confirm:
+Run:
 
 ```bash
-grep -Rni botan ~/scoop/apps/nani-cli/current
+nani-cli --nani-doctor
+openssl version
 ```
 
-The rebuilt release should return no executable Botan dependency.
-
-### `Episode is released, but no valid sources!`
-
-This means the live source returned no playable links. First update NaniCLI, clear cache, and retry without forcing quality:
+Clear stale caches after replacing an older Botan/Node build:
 
 ```bash
 rm -rf ~/.cache/nani-cli ~/.cache/ani-cli
-nani-cli "anime title"
 ```
 
-Provider websites change independently of NaniCLI, so no static release can guarantee every title/source forever.
+If Scoop keeps the old archive, run in PowerShell:
 
-## Files
-
-```text
-nani-cli
-nani-engine
-nani-crypto.js
-nani-cli.1
-README.md
+```powershell
+scoop uninstall nani-cli
+scoop cache rm nani-cli
+scoop update
+scoop install nani-cli
 ```
 
 ## Disclaimer
 
-NaniCLI does not host media. Use it only with content and sources you are authorized to access.
+NaniCLI does not host media. Use it only with sources and content you are authorized to access.
 
 ## Credits
 
