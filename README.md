@@ -1,131 +1,156 @@
 # 🎬 NaniCLI
 
-NaniCLI is a terminal application for browsing, watching, and downloading anime. It bundles an ani-cli-compatible engine and adds NaniCLI commands, aliases, diagnostics, and a Node.js crypto helper.
-
-**Version:** 1.8.8  
-**Platforms:** Linux, macOS, and Windows through Git Bash
+NaniCLI 1.8.8 is a Git Bash/Linux/macOS launcher around the full ani-cli 4.15 engine, with NaniCLI aliases and a bundled Node.js crypto helper. It does not require Botan or Python.
 
 ## Required dependencies
 
-**Node.js is required to run NaniCLI.** NaniCLI uses the included `nani-crypto.js` helper instead of Python or Botan.
+- Node.js **required** for encrypted source handling
+- `curl`, `grep`, `sed`
+- `fzf`, `rofi`, or `dmenu`
+- `mpv`, `iina`, or `vlc`
+- Downloads: `aria2c` plus `yt-dlp` or `ffmpeg`
+- Optional: `syncplay`, `ani-skip`
 
-Base requirements:
+## Windows / Git Bash with Scoop
 
-- Node.js
-- curl
-- sed and grep
-- fzf, rofi, or dmenu
-- mpv, IINA, or VLC
-
-Downloads additionally require `aria2c` and either `yt-dlp` or `ffmpeg`.
-
-## Files in the release
-
-- `nani-cli` — launcher and NaniCLI commands
-- `nani-engine` — complete ani-cli-compatible engine
-- `nani-crypto.js` — Node.js crypto helper
-- `nani-cli.1` — manual page
-- `README.md` — installation and command reference
-
-## Linux installation
-
-```bash
-sudo apt update
-sudo apt install -y nodejs curl grep sed aria2 ffmpeg git fzf yt-dlp mpv
-chmod +x nani-cli nani-engine nani-crypto.js
-sudo cp nani-cli nani-engine nani-crypto.js /usr/local/bin/
-sudo cp nani-cli.1 /usr/local/share/man/man1/
-```
-
-The three executable files must remain in the same directory.
-
-## macOS installation
-
-```bash
-brew install node curl grep aria2 ffmpeg git fzf yt-dlp mpv
-chmod +x nani-cli nani-engine nani-crypto.js
-cp nani-cli nani-engine nani-crypto.js "$(brew --prefix)/bin/"
-cp nani-cli.1 "$(brew --prefix)/share/man/man1/"
-```
-
-IINA may be used instead of mpv:
-
-```bash
-brew install --cask iina
-```
-
-## Windows installation with Scoop and Git Bash
-
-Install Git Bash, Node.js, and dependencies:
+Run dependency installation in PowerShell:
 
 ```powershell
 scoop install git nodejs fzf ffmpeg mpv yt-dlp aria2
 ```
 
-NaniCLI is a shell application. Run it from **Git Bash** or configure the Scoop shim to launch it through Git Bash.
+Use Windows Terminal with a Git Bash profile. Then install NaniCLI through your NavineDevs Scoop bucket/release.
 
-## Complete command reference
+After replacing a GitHub release asset:
+
+```powershell
+scoop update
+scoop uninstall nani-cli
+scoop cache rm nani-cli
+scoop install nani-cli
+```
+
+Open a fresh Git Bash tab and test:
+
+```bash
+hash -r
+nani-cli --nani-doctor
+nani-cli -h
+nani-cli "one piece"
+```
+
+## Linux
+
+```bash
+sudo apt update
+sudo apt install -y nodejs curl grep sed fzf mpv aria2 ffmpeg yt-dlp
+chmod +x nani-cli nani-engine nani-crypto.js
+sudo cp nani-cli nani-engine nani-crypto.js /usr/local/bin/
+sudo mkdir -p /usr/local/share/man/man1
+sudo cp nani-cli.1 /usr/local/share/man/man1/
+```
+
+The three executable files must remain in the same directory.
+
+## macOS
+
+```bash
+brew install node curl grep aria2 ffmpeg git fzf yt-dlp
+brew install --cask iina
+chmod +x nani-cli nani-engine nani-crypto.js
+cp nani-cli nani-engine nani-crypto.js "$(brew --prefix)/bin/"
+cp nani-cli.1 "$(brew --prefix)/share/man/man1/"
+```
+
+## Commands
+
+All original ani-cli commands are supported:
 
 ```text
--c, --continue, --history Continue watching from history
--d, --download            Download instead of playing
--D, --delete              Delete watch history
--e, --episode RANGE       Select episode or range
--r, --range RANGE         Alias for --episode
--q, --quality QUALITY     Select best, worst, 360p, 480p, 720p, or 1080p
--S, --select-nth NUMBER   Automatically select the nth result
--v, --vlc                 Use VLC
--s, --syncplay            Use Syncplay
---dub                     Search dubbed releases
---random                  Randomly select from results
---rofi                    Use rofi
---dmenu                   Use dmenu
---skip                    Use ani-skip with mpv
---skip-title TITLE        Override the ani-skip title
---no-detach               Keep mpv attached
---exit-after-play         Exit after playback
--N, --nextep-countdown    Show next-episode countdown
--l, --logview             Show logs
--U, --update [branch]     Run the upstream engine updater
--V, --version             Show engine version
--h, --help                Show complete help
---nani-version            Show NaniCLI and engine versions
---nani-doctor             Check files and dependencies
---nani-help               Show NaniCLI-specific help
+-c, --continue
+-d, --download
+-D, --delete
+-l, --logview
+-s, --syncplay
+-S, --select-nth NUMBER
+-q, --quality QUALITY
+-v, --vlc
+-V, --version
+-h, --help
+-e, --episode RANGE
+-r, --range RANGE
+--dub
+--rofi
+--dmenu
+--skip
+--skip-title TITLE
+--no-detach
+--exit-after-play
+-N, --nextep-countdown
+-U, --update
+```
+
+NaniCLI additions:
+
+```text
+--history
+--random [query]
+--nani-version
+--nani-doctor
+--nani-help
 ```
 
 Examples:
 
 ```bash
-nani-cli "one piece"
-nani "frieren" -q 1080p
-nani-cli --dub "dragon ball"
-nani-cli --random
+nani-cli
+nani "one piece"
+nani-cli -q 1080p "frieren"
+nani-cli -d -e 1-12 "anime title"
+nani-cli --continue
 nani-cli --history
-nani-cli -d -e 1-3 "cowboy bebop"
-nani-cli --nani-doctor
+nani-cli --random
+nani-cli --dub "anime title"
+nani-cli -s "anime title"
 ```
 
-## Configuration
+## Troubleshooting
 
-NaniCLI accepts ani-cli environment variables, including:
+### `Program "botan" not found`
+
+You are running an older release. Reinstall this package and confirm:
 
 ```bash
-export ANI_CLI_PLAYER=mpv
-export ANI_CLI_QUALITY=1080p
-export ANI_CLI_DOWNLOAD_DIR="$HOME/Downloads/anime"
+grep -Rni botan ~/scoop/apps/nani-cli/current
 ```
 
-On Windows, set the download folder from PowerShell and reopen Git Bash:
+The rebuilt release should return no executable Botan dependency.
 
-```powershell
-setx ANI_CLI_DOWNLOAD_DIR "%USERPROFILE%\Downloads\anime"
+### `Episode is released, but no valid sources!`
+
+This means the live source returned no playable links. First update NaniCLI, clear cache, and retry without forcing quality:
+
+```bash
+rm -rf ~/.cache/nani-cli ~/.cache/ani-cli
+nani-cli "anime title"
+```
+
+Provider websites change independently of NaniCLI, so no static release can guarantee every title/source forever.
+
+## Files
+
+```text
+nani-cli
+nani-engine
+nani-crypto.js
+nani-cli.1
+README.md
 ```
 
 ## Disclaimer
 
-NaniCLI does not host content. Only use it with sources and media you are authorized to access.
+NaniCLI does not host media. Use it only with content and sources you are authorized to access.
 
 ## Credits
 
-Based on `ani-cli` by pystardust. Maintained and extended as NaniCLI by NavineDevs.
+Based on ani-cli by pystardust, maintained and extended as NaniCLI by NavineDevs.
