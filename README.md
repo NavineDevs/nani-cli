@@ -1,156 +1,131 @@
 # 🎬 NaniCLI
 
-A fast and simple CLI tool to browse, watch, and download anime from the terminal.  
-**Fully compatible with ani-cli**, with extra quality-of-life features.
+NaniCLI is a terminal application for browsing, watching, and downloading anime. It bundles an ani-cli-compatible engine and adds NaniCLI commands, aliases, diagnostics, and a Node.js crypto helper.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/os-linux-brightgreen">
-  <img src="https://img.shields.io/badge/os-macos-brightgreen">
-  <img src="https://img.shields.io/badge/os-windows-yellowgreen">
-</p>
+**Version:** 1.8.8  
+**Platforms:** Linux, macOS, and Windows through Git Bash
 
----
+## Required dependencies
 
-## ✨ Features & alias: nani
+**Node.js is required to run NaniCLI.** NaniCLI uses the included `nani-crypto.js` helper instead of Python or Botan.
 
-- `nani -h`
-- `nani-cli -h`
-- Watch anime from the terminal
-- Download episodes (`-d`)
-- Resume watching (`--continue`)
-- Watch history (`--history`)
-- Random anime (`--random`)
-- Uses `mpv`, `iina`, or `vlc`
+Base requirements:
 
----
+- Node.js
+- curl
+- sed and grep
+- fzf, rofi, or dmenu
+- mpv, IINA, or VLC
 
-## 📦 Installation
+Downloads additionally require `aria2c` and either `yt-dlp` or `ffmpeg`.
 
-### 🐧 Linux (Debian / Ubuntu)
+## Files in the release
+
+- `nani-cli` — launcher and NaniCLI commands
+- `nani-engine` — complete ani-cli-compatible engine
+- `nani-crypto.js` — Node.js crypto helper
+- `nani-cli.1` — manual page
+- `README.md` — installation and command reference
+
+## Linux installation
 
 ```bash
 sudo apt update
-sudo apt install -y curl grep aria2 ffmpeg git fzf yt-dlp mpv
-
-git clone https://github.com/NavineDevs/nani-cli.git
-cd nani-cli
-chmod +x nani-cli
-sudo cp nani-cli /usr/local/bin/
+sudo apt install -y nodejs curl grep sed aria2 ffmpeg git fzf yt-dlp mpv
+chmod +x nani-cli nani-engine nani-crypto.js
+sudo cp nani-cli nani-engine nani-crypto.js /usr/local/bin/
 sudo cp nani-cli.1 /usr/local/share/man/man1/
-sudo mandb
 ```
 
-Test:
+The three executable files must remain in the same directory.
+
+## macOS installation
 
 ```bash
-nani-cli
+brew install node curl grep aria2 ffmpeg git fzf yt-dlp mpv
+chmod +x nani-cli nani-engine nani-crypto.js
+cp nani-cli nani-engine nani-crypto.js "$(brew --prefix)/bin/"
+cp nani-cli.1 "$(brew --prefix)/share/man/man1/"
 ```
 
----
-
-### 🍎 macOS
+IINA may be used instead of mpv:
 
 ```bash
-brew install curl grep aria2 ffmpeg git fzf yt-dlp
 brew install --cask iina
-
-git clone https://github.com/NavineDevs/nani-cli.git
-cd nani-cli
-chmod +x nani-cli
-cp nani-cli "$(brew --prefix)"/bin/
-cp nani-cli.1 "$(brew --prefix)"/share/man/man1/
 ```
 
----
+## Windows installation with Scoop and Git Bash
 
-### 🪟 Windows (Git Bash)
-
-Install Git for Windows:
-https://git-scm.com/install/windows
+Install Git Bash, Node.js, and dependencies:
 
 ```powershell
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-iwr -useb get.scoop.sh | iex
-scoop install git
-scoop bucket add extras
-scoop install windows-terminal vlc fzf ffmpeg mpv yt-dlp
+scoop install git nodejs fzf ffmpeg mpv yt-dlp aria2
 ```
 
-Use Git Bash and run:
+NaniCLI is a shell application. Run it from **Git Bash** or configure the Scoop shim to launch it through Git Bash.
 
-```bash
-nani-cli
+## Complete command reference
+
+```text
+-c, --continue, --history Continue watching from history
+-d, --download            Download instead of playing
+-D, --delete              Delete watch history
+-e, --episode RANGE       Select episode or range
+-r, --range RANGE         Alias for --episode
+-q, --quality QUALITY     Select best, worst, 360p, 480p, 720p, or 1080p
+-S, --select-nth NUMBER   Automatically select the nth result
+-v, --vlc                 Use VLC
+-s, --syncplay            Use Syncplay
+--dub                     Search dubbed releases
+--random                  Randomly select from results
+--rofi                    Use rofi
+--dmenu                   Use dmenu
+--skip                    Use ani-skip with mpv
+--skip-title TITLE        Override the ani-skip title
+--no-detach               Keep mpv attached
+--exit-after-play         Exit after playback
+-N, --nextep-countdown    Show next-episode countdown
+-l, --logview             Show logs
+-U, --update [branch]     Run the upstream engine updater
+-V, --version             Show engine version
+-h, --help                Show complete help
+--nani-version            Show NaniCLI and engine versions
+--nani-doctor             Check files and dependencies
+--nani-help               Show NaniCLI-specific help
 ```
 
----
-
-## ▶️ Usage
+Examples:
 
 ```bash
-nani-cli
-nani
-nani-cli -d
-nani-cli --continue
-nani-cli --history
+nani-cli "one piece"
+nani "frieren" -q 1080p
+nani-cli --dub "dragon ball"
 nani-cli --random
+nani-cli --history
+nani-cli -d -e 1-3 "cowboy bebop"
+nani-cli --nani-doctor
 ```
 
----
+## Configuration
 
-## 📁 Files
-
-- Config: `~/.config/nani-cli/config`
-- History: `~/.config/nani-cli/history.json`
-- Cache: `~/.cache/nani-cli/`
-
----
-
-## 📄 Help
+NaniCLI accepts ani-cli environment variables, including:
 
 ```bash
-nani-cli --help
+export ANI_CLI_PLAYER=mpv
+export ANI_CLI_QUALITY=1080p
+export ANI_CLI_DOWNLOAD_DIR="$HOME/Downloads/anime"
 ```
 
-Set download directory (Windows):
+On Windows, set the download folder from PowerShell and reopen Git Bash:
 
 ```powershell
-setx NANI_CLI_DOWNLOAD_DIR "%USERPROFILE%\\Downloads\\anime"
+setx ANI_CLI_DOWNLOAD_DIR "%USERPROFILE%\Downloads\anime"
 ```
 
-Restart the terminal after changing the environment variable.
+## Disclaimer
 
----
+NaniCLI does not host content. Only use it with sources and media you are authorized to access.
 
-## Extra
+## Credits
 
-### Windows
-
-```powershell
-scoop install syncplay
-scoop install extras/vcredist2022
-```
-
-### Linux
-
-```bash
-sudo apt install syncplay
-```
-
-### macOS
-
-```bash
-brew install --cask syncplay
-```
-
----
-
-## ⚠️ Disclaimer
-
-NaniCLI does not host content.
-It streams from publicly available sources.
-
----
-
-## ❤️ Credits
-
-Based on **ani-cli**, maintained and extended by **NavineDevs**.
+Based on `ani-cli` by pystardust. Maintained and extended as NaniCLI by NavineDevs.
