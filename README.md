@@ -1,160 +1,189 @@
 # 🎬 NaniCLI
 
-NaniCLI is an terminal application for browsing, watching, and downloading anime.
+A fast and simple CLI tool to browse, watch, and download anime from the terminal.  
+**Fully compatible with ani-cli**, with extra quality-of-life features.
 
-This release uses **OpenSSL** for encrypted source handling. It does **not** require Botan, Node.js, or Python.
+<p align="center">
+  <img src="https://img.shields.io/badge/os-linux-brightgreen">
+  <img src="https://img.shields.io/badge/os-macos-brightgreen">
+  <img src="https://img.shields.io/badge/os-windows-yellowgreen">
+</p>
 
-## Included files
+---
 
-- `nani-cli` — launcher, aliases, diagnostics, and combined help
-- `nani-engine` — full ani-cli-compatible engine with OpenSSL provider decryption
-- `nani-cli.1` — manual page
+## ✨ Features & alias: nani
+- nani -h
+- nani-cli -h
+- Watch anime from the terminal
+- Download episodes (`-d`)
+- Resume watching (`--continue`)
+- Watch history (`--history`)
+- Random anime (`--random`)
+- Uses `mpv`, `iina`, or `vlc`
 
-Keep `nani-cli` and `nani-engine` in the same folder.
+---
 
-## Dependencies
+## 📦 Installation
 
-Required:
-
-- Bash-compatible shell
-- `openssl`
-- `curl`
-- `grep`
-- `sed`
-- `fzf`, `rofi`, or `dmenu`
-- `mpv`, IINA, or VLC
-
-For downloads:
-
-- `aria2c`
-- `yt-dlp` or `ffmpeg`
-
-Optional:
-
-- `syncplay` for `-s`
-- `ani-skip` for `--skip`
-- `patch` for upstream `-U` updates
-
-## Windows — Scoop and Git Bash
-
-Run in PowerShell:
-
-```powershell
-scoop bucket add extras
-scoop install git openssl fzf ffmpeg mpv yt-dlp aria2
-```
-
-Use the **Git Bash profile inside Windows Terminal**. After installing the Scoop package/release, run:
-
-```bash
-nani-cli --nani-doctor
-nani-cli -h
-nani-cli "one piece"
-```
-
-## Linux — Debian/Ubuntu
+### 🐧 Linux (Debian / Ubuntu)
 
 ```bash
 sudo apt update
-sudo apt install -y openssl curl grep sed fzf mpv aria2 ffmpeg yt-dlp patch
+sudo apt install -y curl grep sed git fzf mpv
+sudo apt install -y aria2 ffmpeg yt-dlp
+
+git clone https://github.com/NavineDevs/nani-cli.git
+cd nani-cli
 chmod +x nani-cli nani-engine
 sudo cp nani-cli nani-engine /usr/local/bin/
 sudo cp nani-cli.1 /usr/local/share/man/man1/
 sudo mandb
 ```
 
-## macOS
-
+Test:
 ```bash
-brew install openssl curl grep fzf mpv aria2 ffmpeg yt-dlp
-chmod +x nani-cli nani-engine
-cp nani-cli nani-engine "$(brew --prefix)/bin/"
-cp nani-cli.1 "$(brew --prefix)/share/man/man1/"
+nani-cli
 ```
 
-IINA can replace mpv:
+---
 
+### 🍎 macOS
+
+#### Install dependencies
 ```bash
+brew install curl grep gnu-sed git fzf mpv
+brew install aria2 ffmpeg yt-dlp
 brew install --cask iina
 ```
 
-## Commands
-
-NaniCLI additions:
-
-```text
---history
---random
---nani-version
---nani-doctor
---nani-help
-```
-
-Full ani-cli-compatible commands:
-
-```text
--c, --continue
--d, --download
--D, --delete
--l, --logview
--s, --syncplay
--S, --select-nth NUMBER
--q, --quality QUALITY
--v, --vlc
--V, --version
--h, --help
--e, --episode RANGE
--r, --range RANGE
---dub
---rofi
---dmenu
---skip
---no-detach
---exit-after-play
---skip-title TITLE
--N, --nextep-countdown
--U, --update
-```
-
-Examples:
-
+#### Install NaniCLI
 ```bash
-nani-cli "one piece"
-nani "frieren" -q 1080p
-nani-cli --dub "dragon ball"
-nani-cli --history
-nani-cli --random
-nani-cli -d -e 1-3 "cowboy bebop"
+git clone https://github.com/NavineDevs/nani-cli.git
+cd nani-cli
+chmod +x nani-cli nani-engine
+cp nani-cli nani-engine "$(brew --prefix)"/bin/
+cp nani-cli.1 "$(brew --prefix)"/share/man/man1/
 ```
 
-## Troubleshooting
-
-Run:
-
+Test:
 ```bash
-nani-cli --nani-doctor
-openssl version
+nani-cli
+man nani-cli
 ```
 
-Clear stale caches after replacing an older Botan/Node build:
+---
 
-```bash
-rm -rf ~/.cache/nani-cli ~/.cache/ani-cli
-```
+### 🪟 Windows (Scoop)
 
-If Scoop keeps the old archive, run in PowerShell:
+### you need gitbash install using powershell or gitbash website https://git-scm.com/install/windows
 
+#### Install Scoop (PowerShell)
 ```powershell
-scoop uninstall nani-cli
-scoop cache rm nani-cli
-scoop update
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+iwr -useb get.scoop.sh | iex
+```
+
+### Install git using scoop (powershell)
+``` 
+scoop install git
+```
+
+### command line for powershell profile
+```
+%USERPROFILE%\scoop\apps\git\current\bin\sh.exe -i -l
+```
+
+### Install extras
+```
+scoop bucket add extras
+scoop install extras/windows-terminal
+scoop install extras/vlc
+```
+### Install Dependencies
+```
+scoop install fzf mpv aria2 ffmpeg yt-dlp
+```
+
+#### Add bucket & install
+```powershell
+scoop bucket add nani-cli https://github.com/NavineDevs/nani-cli
 scoop install nani-cli
 ```
 
-## Disclaimer
+Test:
+```powershell
+nani-cli
+```
 
-NaniCLI does not host media. Use it only with sources and content you are authorized to access.
+> 💡 For best results on Windows, use **Windows Terminal + Git Bash**.
 
-## Credits
+---
 
-Based on ani-cli by pystardust, maintained and extended as NaniCLI by NavineDevs.
+
+## ▶️ Usage
+
+```bash
+nani-cli
+nani
+nani-cli -d 
+nani-cli --continue
+nani-cli --history
+nani-cli --random
+```
+
+---
+
+## 📁 Files
+
+- Config: `~/.config/nani-cli/config`
+- History: `~/.config/nani-cli/history.json`
+- Cache: `~/.cache/nani-cli/`
+
+---
+
+## 📄 Help
+
+```bash
+nani-cli --help
+```
+- Downloaded Path `C:\Users\user\anime.mp4`
+```To check download path (windows)
+pwd
+```
+
+```Set new path(windows)
+setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\anime
+or setx NANI_CLI_DOWNLOAD_DIR "$HOME\Downloads\
+```
+you can change the Downloads to like Videos and anime to like movies restart the terminal after
+
+---
+
+## Extra stuff
+```Windows install syncplay for nani-cli -s
+scoop install syncplay
+scoop install extras/vcredist202
+```
+```to unistall extras/vcredist202 
+do scoop unistall extras/vcredist202
+```
+```Linx syncplay
+sudo apt update
+sudo apt install syncplay
+```
+```Macos syncplay
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install --cask syncplay
+```
+---
+
+## ⚠️ Disclaimer
+
+NaniCLI does not host content.  
+It streams from publicly available sources.
+
+---
+
+## ❤️ Credits
+
+Based on **ani-cli**, maintained and extended by **NavineDevs**.
